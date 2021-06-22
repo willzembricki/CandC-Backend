@@ -1,9 +1,9 @@
 class CreateOffenderRecords < ActiveRecord::Migration[6.1]
   def change
     create_table :offender_records do |t|
+      t.string :crime_name
       t.integer :total_offenders
-      t.integer :malePopO
-      t.integer :femalePopO
+  
       t.integer :asianPopO
       t.integer :native_hawaiianO
       t.integer :blackO

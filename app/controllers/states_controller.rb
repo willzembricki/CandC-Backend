@@ -7,7 +7,9 @@ class StatesController < ApplicationController
 
     render json: @states
   end
-
+def find_me_state
+  render json: State.find_by(abbreviation: params[:abbreviation])
+end
   # GET /states/1
   def show
     render json: @state

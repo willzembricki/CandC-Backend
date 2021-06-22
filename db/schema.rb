@@ -26,9 +26,8 @@ ActiveRecord::Schema.define(version: 2021_06_11_002921) do
   end
 
   create_table "offender_records", force: :cascade do |t|
+    t.string "crime_name"
     t.integer "total_offenders"
-    t.integer "malePopO"
-    t.integer "femalePopO"
     t.integer "asianPopO"
     t.integer "native_hawaiianO"
     t.integer "blackO"
@@ -44,18 +43,14 @@ ActiveRecord::Schema.define(version: 2021_06_11_002921) do
     t.string "name"
     t.string "abbreviation"
     t.integer "population"
-    t.integer "malePop"
-    t.integer "femalePop"
     t.integer "asianPop"
     t.integer "native_hawaiian"
     t.integer "black"
     t.integer "american_indian"
     t.integer "unidentified"
     t.integer "white"
-    t.bigint "state_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["state_id"], name: "index_states_on_state_id"
   end
 
   create_table "user_offender_records", force: :cascade do |t|
@@ -86,7 +81,6 @@ ActiveRecord::Schema.define(version: 2021_06_11_002921) do
 
   add_foreign_key "arrest_records", "offender_records"
   add_foreign_key "arrest_records", "states"
-  add_foreign_key "states", "states"
   add_foreign_key "user_offender_records", "offender_records"
   add_foreign_key "user_offender_records", "users"
   add_foreign_key "user_states", "states"
