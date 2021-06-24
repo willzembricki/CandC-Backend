@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
-  before_action :authorized, only: [:auto_login]
+
   # GET /users
   def index
     @users = User.all
@@ -37,7 +37,6 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
-
   def login
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
@@ -50,7 +49,6 @@ class UsersController < ApplicationController
   def auto_login
     render json: @user
   end
-  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -59,6 +57,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :password)
+      params.require(:user).permit(:username, :password_digest)
     end
 end

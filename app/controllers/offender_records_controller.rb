@@ -46,6 +46,6 @@ class OffenderRecordsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def offender_record_params
-      params.require(:offender_record).permit(:total_offenders, :malePopO, :femalePopO, :asianPopO, :native_hawaiianO, :blackO, :american_indianO, :unidentifiedO, :whiteO, :year)
+      params.require(:offender_record).permit(:crimeName, :totalPopO, :asianPopO, :native_hawaiianO, :blackO, :american_indianO, :unknownO, :whiteO, :year, :state_id)
     end
 end

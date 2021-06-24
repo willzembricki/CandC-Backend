@@ -10,33 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_11_002921) do
+ActiveRecord::Schema.define(version: 2021_06_24_012104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "arrest_records", force: :cascade do |t|
+  create_table "favorite_states", force: :cascade do |t|
     t.bigint "state_id", null: false
-    t.bigint "offender_record_id", null: false
-    t.integer "year"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["offender_record_id"], name: "index_arrest_records_on_offender_record_id"
-    t.index ["state_id"], name: "index_arrest_records_on_state_id"
+    t.index ["state_id"], name: "index_favorite_states_on_state_id"
+    t.index ["user_id"], name: "index_favorite_states_on_user_id"
   end
 
   create_table "offender_records", force: :cascade do |t|
-    t.string "crime_name"
-    t.integer "total_offenders"
+    t.string "crimeName"
+    t.integer "totalPopO"
     t.integer "asianPopO"
     t.integer "native_hawaiianO"
     t.integer "blackO"
     t.integer "american_indianO"
-    t.integer "unidentifiedO"
+    t.integer "unknownO"
     t.integer "whiteO"
     t.integer "year"
+    t.bigint "state_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["state_id"], name: "index_offender_records_on_state_id"
+  end
+
+  create_table "saved_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "offender_record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["offender_record_id"], name: "index_saved_records_on_offender_record_id"
+    t.index ["user_id"], name: "index_saved_records_on_user_id"
   end
 
   create_table "states", force: :cascade do |t|
@@ -47,42 +57,22 @@ ActiveRecord::Schema.define(version: 2021_06_11_002921) do
     t.integer "native_hawaiian"
     t.integer "black"
     t.integer "american_indian"
-    t.integer "unidentified"
+    t.integer "unknown"
     t.integer "white"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "user_offender_records", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "offender_record_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["offender_record_id"], name: "index_user_offender_records_on_offender_record_id"
-    t.index ["user_id"], name: "index_user_offender_records_on_user_id"
-  end
-
-  create_table "user_states", force: :cascade do |t|
-    t.bigint "state_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["state_id"], name: "index_user_states_on_state_id"
-    t.index ["user_id"], name: "index_user_states_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
-    t.string "user_data", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "arrest_records", "offender_records"
-  add_foreign_key "arrest_records", "states"
-  add_foreign_key "user_offender_records", "offender_records"
-  add_foreign_key "user_offender_records", "users"
-  add_foreign_key "user_states", "states"
-  add_foreign_key "user_states", "users"
+  add_foreign_key "favorite_states", "states"
+  add_foreign_key "favorite_states", "users"
+  add_foreign_key "offender_records", "states"
+  add_foreign_key "saved_records", "offender_records"
+  add_foreign_key "saved_records", "users"
 end

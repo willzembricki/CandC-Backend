@@ -7,9 +7,7 @@ class StatesController < ApplicationController
 
     render json: @states
   end
-def find_me_state
-  render json: State.find_by(abbreviation: params[:abbreviation])
-end
+
   # GET /states/1
   def show
     render json: @state
@@ -39,7 +37,9 @@ end
   def destroy
     @state.destroy
   end
-
+  def find_me_state
+    render json: State.find_by(abbreviation: params[:abbreviation])
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_state
@@ -48,6 +48,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def state_params
-      params.require(:state).permit(:name, :abbreviation, :population, :malePop, :femalePop, :asianPop, :native_hawaiian, :black, :american_indian, :unidentified, :white, :state_id)
+      params.require(:state).permit(:name, :abbreviation, :population, :asianPop, :native_hawaiian, :black, :american_indian, :unknown, :white)
     end
 end
