@@ -23,6 +23,10 @@ class OffenderRecordsController < ApplicationController
       render json: @offender_record.errors, status: :unprocessable_entity
     end
   end
+  def find_me_crime 
+    render json: OffenderRecord.find_records(params[:state_id],params[:crimeName])
+  end
+
 
   # PATCH/PUT /offender_records/1
   def update
